@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";  // Correct import for Login
+import Signup from "./pages/Signup";  // Correct import for Signup
 import "prismjs/themes/prism-tomorrow.css";
 import Editor from "react-simple-code-editor";
 import prism from "prismjs";
@@ -48,72 +51,58 @@ function App() {
   }
 
   return (
-    <div className={`app-container ${theme}`}>
-      <header>
-        <div className="header-content">
-          <h1>
-            <span className="logo-icon">⟨⟩</span> AI Code Reviewer
-          </h1>
-          <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
-            {theme === "dark" ? "🌙" : "☀️"}
-          </button>
-        </div>
-      </header>
-      <main>
-        <div className="editor-container">
-          <Editor
-            value={code}
-            onValueChange={(code) => setCode(code)}
-            highlight={(code) =>
-              prism.highlight(code, prism.languages.javascript, "javascript")
-            }
-            padding={10}
-            className="code-editor"
-          />
-          <div className="button-container">
+    <Router>
+      <div className={`app-container ${theme}`}>
+        <header>
+          <div className="header-content">
+            <h1>
+              <span className="logo-icon">⟨⟩</span> AI Code Reviewer
+            </h1>
             <button
-              onClick={reviewCode}
-              className="review-button"
-              disabled={loading}
+              onClick={toggleTheme}
+              className="theme-toggle"
+              aria-label="Toggle theme"
             >
-              {loading ? "Reviewing..." : "Review Code"}
-            </button>
-            <button onClick={clearCode} className="clear-button">
-              Clear
+              {theme === "dark" ? "🌙" : "☀️"}
             </button>
           </div>
-        </div>
-        <div className="response-container">
-          <h2>AI Review</h2>
-          {error && <p className="error-message">{error}</p>}
-          <Markdown
-            rehypePlugins={[rehypeHighlight]}
-            components={{
-              code({ node, inline, className, children, ...props }) {
-                return !inline ? (
-                  <SyntaxHighlighter
-                    style={dracula}
-                    language="javascript"
-                    {...props}
+        </header>
+        <main>
+          <Routes>
+            <Route path="/login" element={<Login />} />  {/* Correct route for Login */}
+            <Route path="/signup" element={<Signup />} />  {/* Correct route for Signup */}
+            <Route path="/" element={
+              <div className="editor-container">
+                <Editor
+                  value={code}
+                  onValueChange={(code) => setCode(code)}
+                  highlight={(code) =>
+                    prism.highlight(code, prism.languages.javascript, "javascript")
+                  }
+                  padding={10}
+                  className="code-editor"
+                />
+                <div className="button-container">
+                  <button
+                    onClick={reviewCode}
+                    className="review-button"
+                    disabled={loading}
                   >
-                    {String(children).replace(/\n$/, "")}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-            }}
-          >
-            {review}
-          </Markdown>
-        </div>
-      </main>
-      <footer>
-        <p>AI Code Reviewer © 2025 | Powered by React</p>
-      </footer>
-    </div>
+                    {loading ? "Reviewing..." : "Review Code"}
+                  </button>
+                  <button onClick={clearCode} className="clear-button">
+                    Clear
+                  </button>
+                </div>
+              </div>
+            } />
+          </Routes>
+        </main>
+        <footer>
+          <p>AI Code Reviewer © 2025 | Powered by React</p>
+        </footer>
+      </div>
+    </Router>
   );
 }
 
