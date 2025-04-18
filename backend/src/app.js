@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { userRouter } from "./routes/userRoute.js"; 
-import aiRoutes from "./routes/ai.routes.js";
+import userRoutes from "./routes/userRoute.js";
+import connectDB from "./config/mongodb.js";
 
 const app = express();
 
@@ -9,11 +9,11 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("aayush");
+  res.send("Server is running");
 });
 
-app.use("/api/auth", userRouter);
-app.use("/ai", aiRoutes);
+connectDB();
+
+app.use("/api/auth", userRoutes);
 
 export default app;
-

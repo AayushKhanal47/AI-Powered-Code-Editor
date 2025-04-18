@@ -1,12 +1,21 @@
+import dotenv from "dotenv";
+dotenv.config(); 
+
+
 import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+if (!JWT_SECRET) {
+  console.error(" JWT_SECRET is missing from environment variables");
+  process.exit(1);
+}
+
 export const registerController = async (req, res) => {
   const { username, email, password } = req.body;
-  
+
   try {
     const userExists = await userModel.findOne({ email });
     if (userExists) {
@@ -16,12 +25,21 @@ export const registerController = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new userModel({ username, email, password: hashedPassword });
+    const newUser = new userModel({
+      username,
+      email,
+      password: hashedPassword,
+    });
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
-    return res.status(201).json({ message: "User created", token });
+    return res.status(201).json({
+      message: "User created",
+      token,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -43,7 +61,10 @@ export const loginController = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
 
-    return res.status(200).json({ message: "Login successful", token });
+    return res.status(200).json({
+      message: "Login successful",
+      token,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
