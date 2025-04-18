@@ -15,10 +15,12 @@ function App() {
   const [review, setReview] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     prism.highlightAll();
-  }, []);
+    document.body.className = theme;
+  }, [theme]);
 
   async function reviewCode() {
     setLoading(true);
@@ -41,10 +43,21 @@ function App() {
     setError("");
   }
 
+  function toggleTheme() {
+    setTheme(theme === "dark" ? "light" : "dark");
+  }
+
   return (
-    <div className="app-container">
+    <div className={`app-container ${theme}`}>
       <header>
-        <h1>AI Code Reviewer</h1>
+        <div className="header-content">
+          <h1>
+            <span className="logo-icon">⟨⟩</span> AI Code Reviewer
+          </h1>
+          <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
+            {theme === "dark" ? "🌙" : "☀️"}
+          </button>
+        </div>
       </header>
       <main>
         <div className="editor-container">
@@ -97,6 +110,9 @@ function App() {
           </Markdown>
         </div>
       </main>
+      <footer>
+        <p>AI Code Reviewer © 2025 | Powered by React</p>
+      </footer>
     </div>
   );
 }

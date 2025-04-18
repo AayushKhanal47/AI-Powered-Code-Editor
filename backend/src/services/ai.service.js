@@ -8,7 +8,7 @@ const model = genAI.getGenerativeModel({
 
 
 systemInstruction: `
-  return the error message if the code provided is wrong , if it is correct just say , it is right code
+  return the error message if the code provided is wrong , if it is correct just say , it is right code. 
 `
 });
 
