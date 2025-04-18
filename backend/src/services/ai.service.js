@@ -5,13 +5,10 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
 
-
-
-systemInstruction: `
+  systemInstruction: `
   return the error message if the code provided is wrong , if it is correct just say , it is right code. 
-`
+`,
 });
-
 
 async function generateContent(prompt) {
   try {
@@ -29,4 +26,3 @@ async function generateContent(prompt) {
 }
 
 module.exports = generateContent;
-

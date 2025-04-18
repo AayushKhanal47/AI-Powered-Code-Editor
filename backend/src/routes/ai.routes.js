@@ -1,7 +1,9 @@
-const express = require("express");
-const aiController = require("../controllers/ai.controllers");
-const router = express.Router();
+import express from "express";
 
-router.post("/get-review", aiController.getResponse);
+const aiRoutes = express.Router();
 
-module.exports = router;
+aiRoutes.get("/", (req, res) => {
+  res.send("AI Routes are working");
+});
+
+export default aiRoutes;

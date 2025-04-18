@@ -1,5 +1,3 @@
-
-
 const aiService = require("../services/ai.service");
 
 exports.getResponse = async (req, res) => {
@@ -9,12 +7,11 @@ exports.getResponse = async (req, res) => {
       return res.status(400).json({ error: "Code is required" });
     }
 
-    const review = await aiService(code); 
-    
-    res.json({ review }); 
+    const review = await aiService(code);
+
+    res.json({ review });
   } catch (error) {
     console.error("Controller Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
