@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react"
-import { User, Mail, Lock, Loader2 } from "lucide-react"
-import axios from "axios"
+import { useState } from "react";
+import { User, Mail, Lock, Loader2 } from "lucide-react";
+import axios from "axios";
 
-// Basic Button component definition
 const Button = ({ children, ...props }) => {
   return (
     <button
@@ -16,7 +15,6 @@ const Button = ({ children, ...props }) => {
   );
 };
 
-// Basic Input component definition
 const Input = ({ ...props }) => {
   return (
     <input
@@ -26,7 +24,6 @@ const Input = ({ ...props }) => {
   );
 };
 
-// Basic Label component definition
 const Label = ({ children, ...props }) => {
   return (
     <label
@@ -38,33 +35,49 @@ const Label = ({ children, ...props }) => {
   );
 };
 
-// Basic Card component definitions
 const Card = ({ className, children, ...props }) => (
-  <div className={`rounded-md border bg-card text-card-foreground shadow-sm ${className}`} {...props}>
+  <div
+    className={`rounded-md border bg-card text-card-foreground shadow-sm ${className}`}
+    {...props}
+  >
     {children}
   </div>
 );
 const CardHeader = ({ className, children, ...props }) => (
-  <div className={`flex flex-col space-y-1.5 p-6 ${className}`} {...props}>{children}</div>
+  <div className={`flex flex-col space-y-1.5 p-6 ${className}`} {...props}>
+    {children}
+  </div>
 );
 const CardContent = ({ className, children, ...props }) => (
-  <div className={`p-6 pt-0 ${className}`} {...props}>{children}</div>
+  <div className={`p-6 pt-0 ${className}`} {...props}>
+    {children}
+  </div>
 );
 const CardFooter = ({ className, children, ...props }) => (
-  <div className={`flex items-center p-6 pt-0 ${className}`} {...props}>{children}</div>
+  <div className={`flex items-center p-6 pt-0 ${className}`} {...props}>
+    {children}
+  </div>
 );
 const CardTitle = ({ className, children, ...props }) => (
-  <h3 className={`text-lg font-semibold leading-none tracking-tight ${className}`} {...props}>{children}</h3>
+  <h3
+    className={`text-lg font-semibold leading-none tracking-tight ${className}`}
+    {...props}
+  >
+    {children}
+  </h3>
 );
 const CardDescription = ({ className, children, ...props }) => (
-  <p className={`text-sm text-muted-foreground ${className}`} {...props}>{children}</p>
+  <p className={`text-sm text-muted-foreground ${className}`} {...props}>
+    {children}
+  </p>
 );
 
-// Basic Alert component definitions
 const Alert = ({ variant = "default", className, children, ...props }) => (
   <div
     className={`relative w-full rounded-md border ${
-      variant === "destructive" ? "border-destructive bg-destructive text-destructive-foreground" : "border-border bg-secondary text-secondary-foreground"
+      variant === "destructive"
+        ? "border-destructive bg-destructive text-destructive-foreground"
+        : "border-border bg-secondary text-secondary-foreground"
     } p-4 ${className}`}
     {...props}
   >
@@ -72,47 +85,59 @@ const Alert = ({ variant = "default", className, children, ...props }) => (
   </div>
 );
 const AlertDescription = ({ className, children, ...props }) => (
-  <div className={`text-sm [&_p]:leading-relaxed ${className}`} {...props}>{children}</div>
+  <div className={`text-sm [&_p]:leading-relaxed ${className}`} {...props}>
+    {children}
+  </div>
 );
 
 const Signup = () => {
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/register", {
-        username,
-        email,
-        password,
-      })
-      const token = response.data.token
-      localStorage.setItem("token", token)
-      window.location.href = "/dashboard"
+      const response = await axios.post(
+        "http://localhost:5001/api/auth/register",
+        {
+          username,
+          email,
+          password,
+        }
+      );
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      window.location.href = "/dashboard";
     } catch (err) {
-      setError("Failed to sign up. Please try again.")
+      setError("Failed to sign up. Please try again.");
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950">
       <Card className="w-full max-w-md shadow-lg bg-gray-900 border-gray-800">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center text-white">Sign Up</CardTitle>
-          <CardDescription className="text-center text-gray-400">Create an account to get started</CardDescription>
+          <CardTitle className="text-2xl font-bold text-center text-white">
+            Sign Up
+          </CardTitle>
+          <CardDescription className="text-center text-gray-400">
+            Create an account to get started
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {error && (
-            <Alert variant="destructive" className="mb-4 bg-red-900/50 border-red-800">
+            <Alert
+              variant="destructive"
+              className="mb-4 bg-red-900/50 border-red-800"
+            >
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
@@ -168,7 +193,11 @@ const Signup = () => {
                 />
               </div>
             </div>
-            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+              disabled={loading}
+            >
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -183,14 +212,17 @@ const Signup = () => {
         <CardFooter className="flex flex-col">
           <div className="text-center text-sm mt-2 text-gray-400">
             Already have an account?{" "}
-            <a href="/login" className="text-purple-400 font-medium hover:text-purple-300">
+            <a
+              href="/login"
+              className="text-purple-400 font-medium hover:text-purple-300"
+            >
               Log in
             </a>
           </div>
         </CardFooter>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

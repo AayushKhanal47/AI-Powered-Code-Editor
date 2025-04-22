@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Mail, Lock, Loader2 } from 'lucide-react';
 import axios from 'axios';
 
-// Basic Button component definition
+
 const Button = ({ children, ...props }) => {
   return (
     <button
@@ -16,7 +16,7 @@ const Button = ({ children, ...props }) => {
   );
 };
 
-// Basic Input component definition
+
 const Input = ({ ...props }) => {
   return (
     <input
@@ -26,7 +26,7 @@ const Input = ({ ...props }) => {
   );
 };
 
-// Basic Label component definition
+
 const Label = ({ children, ...props }) => {
   return (
     <label
@@ -38,7 +38,7 @@ const Label = ({ children, ...props }) => {
   );
 };
 
-// Basic Card component definitions
+
 const Card = ({ className, children, ...props }) => (
   <div className={`rounded-md border bg-card text-card-foreground shadow-sm ${className}`} {...props}>
     {children}
@@ -60,7 +60,7 @@ const CardDescription = ({ className, children, ...props }) => (
   <p className={`text-sm text-muted-foreground ${className}`} {...props}>{children}</p>
 );
 
-// Basic Alert component definitions
+
 const Alert = ({ variant = "default", className, children, ...props }) => (
   <div
     className={`relative w-full rounded-md border ${
@@ -87,7 +87,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://localhost:5001/api/auth/login", {
         email,
         password,
       });
