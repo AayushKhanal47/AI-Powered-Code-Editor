@@ -1,13 +1,14 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-require("dotenv").config();
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
-
   systemInstruction: `
-  return the error message if the code provided is wrong , if it is correct just say , it is right code. 
-`,
+    Return the error message if the code is incorrect. If it is correct, just respond: "It is the right code."
+  `,
 });
 
 async function generateContent(prompt) {
@@ -25,4 +26,5 @@ async function generateContent(prompt) {
   }
 }
 
-module.exports = generateContent;
+export default generateContent;
+

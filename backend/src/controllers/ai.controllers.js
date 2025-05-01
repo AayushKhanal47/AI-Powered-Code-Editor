@@ -1,14 +1,13 @@
-const aiService = require("../services/ai.service");
+import aiService from "../services/ai.service.js";
 
-exports.getResponse = async (req, res) => {
+export const getResponse = async (req, res) => {
   try {
-    const code = req.body.code;
+    const code = req.query.code;
     if (!code) {
       return res.status(400).json({ error: "Code is required" });
     }
 
     const review = await aiService(code);
-
     res.json({ review });
   } catch (error) {
     console.error("Controller Error:", error);
