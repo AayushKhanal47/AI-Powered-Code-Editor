@@ -113,7 +113,7 @@ const Signup = () => {
       );
       const token = response.data.token;
       localStorage.setItem("token", token);
-      window.location.href = "/dashboard";
+      window.location.href = "/editor";
     } catch (err) {
       setError("Failed to sign up. Please try again.");
     }
